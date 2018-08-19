@@ -1,1 +1,3 @@
-# rate calculation based on input
+
+# Koa api / chai
+rate calculation based on input
