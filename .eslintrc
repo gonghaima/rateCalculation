@@ -1,0 +1,24 @@
+{
+    "parser": "babel-eslint",
+    "plugins": ["prettier"],
+    "extends": ["airbnb"],
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "rules": {
+      "react/jsx-filename-extension": [
+        "error",
+        { "extensions": [".js", ".jsx"] }
+      ],
+      "jsx-a11y/anchor-is-valid": "off",
+      "no-unused-vars": ["error", { "vars": "all", "args": "none" }],
+      "no-shadow": "off",
+      "no-underscore-dangle": "off",
+      "react/prop-types": "off",
+      "no-param-reassign": "off",
+      "react/no-did-mount-set-state": "off",
+      "no-script-url": "off"
+    }
+  }
+  

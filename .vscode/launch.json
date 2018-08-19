@@ -1,0 +1,34 @@
+{
+    "version": "0.2.0",
+    "configurations": [{
+        "type": "node",
+        "request": "launch",
+        "name": "Launch via Babel",
+        "program": "${workspaceRoot}/app/index.js",
+        "stopOnEntry": false,
+        "runtimeExecutable": "node",
+        "cwd": "${workspaceRoot}",
+        "runtimeArgs": ["--inspect", "--nolazy", "--debug-brk"],
+        "env": {
+          "NODE_ENV": "development",
+          "BABEL_ENV": "debug"
+        },
+        "sourceMaps": true,
+        "outFiles": ["${workspaceRoot}/src/**.js"],
+        "port": 9229
+      },
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Run AVA test",
+        "program": "${workspaceRoot}/node_modules/ava/profile.js",
+        "args": [
+          "${file}"
+        ],
+        "skipFiles": [
+          "<node_internals>/**/*.js"
+        ]
+      }
+    ],
+    "compounds": []
+  }
