@@ -1,27 +1,11 @@
 const pkginfo = require('../../package.json');
-const { BETS, RACE_RESULT } = require('../constants/data');
-// const rules = require('../config/pricingRules');
 
 const requireDir = require('require-dir');
 
+const fs = require('fs');
+
 const rawRules = requireDir('../config/pricingRules');
-const rulesResult = Object.entries(rawRules).map(([key, value]) =>
-  value(BETS, RACE_RESULT));
 
-// const spec = require('../spec');
-
-/**
- * @swagger
- * /:
- *   get:
- *     tags:
- *       - Public
- *     summary: Get API information.
- *     operationId: getApiInfo
- *     responses:
- *       200:
- *         description: Describe general API information
- */
 exports.getApiInfo = (ctx) => {
   // BUSINESS LOGIC
   const data = {
@@ -33,37 +17,22 @@ exports.getApiInfo = (ctx) => {
 
   return ctx.res.ok({
     data,
-    message: 'Hello, world!',
+    message: 'Healthy!',
   });
 };
 
-/**
- * @swagger
- * /spec:
- *   get:
- *     tags:
- *       - Public
- *     summary: Get Open API specification.
- *     operationId: getSwaggerSpec
- *     responses:
- *       200:
- *         description: Describe Swagger Open API Specification
- */
+
 exports.getSwaggerSpec = (ctx) => {
-  //   ctx.body = spec;
-  ctx.body = 'spec';
+  ctx.body = JSON.parse(fs.readFileSync('app/openapi.json', 'utf8'));
 };
 
 exports.calcRate = (ctx) => {
-  ctx.body = JSON.stringify(ctx.request.body);
-  const rulesResult1 = Object.entries(rawRules).map(([key, value]) =>
+  const resultArray = Object.entries(rawRules).map(([key, value]) =>
     value(ctx.request.body.BETS, ctx.request.body.RACE_RESULT));
 
-  // reduce to one array
-  const rulesResult2 = [...rulesResult1].reduce((a, b) => [...a, ...b]);
-  ctx.body = rulesResult2;
+  const formatResult = [...resultArray].reduce((a, b) => [...a, ...b]);
   return ctx.res.ok({
-    data: rulesResult2,
+    data: formatResult,
     message: 'successful!',
   });
 };
