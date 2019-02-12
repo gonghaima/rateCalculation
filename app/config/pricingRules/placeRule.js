@@ -1,9 +1,11 @@
+const utils = require('../../constants/utils');
+
 const placeConfig = (bets, raceResult) => {
   const pBet = bets.filter(c => c.indexOf('Bet:P') > -1);
   const resultArr = raceResult.split(':');
 
   const betsAmountTotal =
-    (pBet.map(c => Number(c.substr(8))).reduce((a, b) => a + b, 0) / 3) * 0.88;
+    (utils.sum(pBet.map(c => Number(c.substr(8)))) / 3) * 0.88;
 
   const filterData = (data, searchTerm) =>
     data
@@ -12,8 +14,7 @@ const placeConfig = (bets, raceResult) => {
 
   const placeList = [1, 2, 3].map(index => filterData(pBet, resultArr[index]));
 
-  const sum = data => data.reduce((a, b) => a + b, 0);
-  const subTotal = placeList.map(i => sum(i));
+  const subTotal = placeList.map(i => utils.sum(i));
 
   const formatter = (data, total, subTotal) =>
     `Place:${data}:$${Math.round((total * 100) / subTotal) / 100}`;
